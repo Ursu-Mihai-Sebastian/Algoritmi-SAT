@@ -1,4 +1,4 @@
-# Algoritmi-SAT
+# Indicatii input
 
 Nu introduceti inputuri care nu respecta formatul cerut,nu tot codul nu are teste de validare.
 
