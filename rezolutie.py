@@ -42,7 +42,7 @@ def rezolva(clauza1, clauza2):
     for literal in clauza1:
         if -literal in clauza2:
             clauza_noua = (clauza1 - {literal}) | (clauza2 - {-literal})
-            # Eliminam clauzele tautologice (ex: x si ¬x), pentru Generatorul curent nu este cazul)
+            # Eliminam clauzele tautologice (ex: x si ¬x), pentru 'genereaza_formula_satisfiabila' nu este cazul)
             if any(-lit in clauza_noua for lit in clauza_noua):
                 continue
             rezultate.add(frozenset(clauza_noua))

@@ -4,25 +4,24 @@ def is_subsumed(new_clause, formula):
 
 def dp_solver(formula):
     """
-    Implementarea algoritmului Davis-Putnam clasic (fara literalul pur).
-    Am facut optimizari pentru a face algoritmul complet doar cu pasii explcati in sectiunea sa
-    de teorie.
+    Implementarea algoritmului clasic Davis-Putnam (fara literalul pur).
+    Am facut optimizari pentru a face algoritmul complet, respectand pasii explicati in sectiunea de teorie.
     param formula: lista de clauze (seturi de literali)
     return: (True daca formula este nesatisfiabila, None)
     """
     formula = [set(clause) for clause in formula]
     all_clauses = set(frozenset(clause) for clause in formula)
     while True:
-        # Eliminare tautologii nu avem in cazul nostru dar pentru corectitudine.
+        # Eliminarea tautologiilor; deși nu avem cazuri de tautologii pentru 'genereaza_formula_satisfiabila', este important pentru corectitudine.
         formula = [clause for clause in formula if not any(-lit in clause for lit in clause)]
 
         # Verificare clauza vida (NESATISFIABIL)
         if any(len(clause) == 0 for clause in formula):
             return True, None  # NESATISFIABIL
 
-        # Daca formula este goala => SATISFIABIL (nu se mai poate deduce nimic)
+        # Daca formula este goala => SATISFIABIL
         if not formula:
-            return False, {}  # SATISFIABIL, dar fara interpretare construita
+            return False, {}  # SATISFIABIL
 
         # Alegem o variabila pentru rezolutie
         literals = {lit for clause in formula for lit in clause}
@@ -38,7 +37,7 @@ def dp_solver(formula):
             for c2 in neg_clauses:
                 resolvent = (c1 - {chosen}) | (c2 - {-chosen})
                 if not resolvent:  # Clauza vida.
-                    return True, None  # UNSAT
+                    return True, None  # NESATISFIABIL
 
                 # Verifica sa nu fie tautologie
                 if any(-lit in resolvent for lit in resolvent):

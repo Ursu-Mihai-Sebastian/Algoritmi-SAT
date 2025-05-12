@@ -12,6 +12,7 @@ SHOW_TRUTH_VALUES_DPLL = True  # True- va arata o enumeratie de literal-valoare 
 
 
 
+
 def  genereaza_formula_satisfiabila(n_vars, n_clauze):
     """Genereaza o problema 3-SAT satisfiabila prin crearea initiala a unei atribuiri aleatoare"""
     variables = list(range(1, n_vars + 1))
