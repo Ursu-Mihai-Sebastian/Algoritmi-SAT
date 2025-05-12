@@ -227,7 +227,6 @@ def dpll_solver(clauses_input):
         if model is not None:  # Modelul ar putea fi None daca ceva a esuat intern, desi nu ar trebui
             final_model.update(model)
 
-        # Asigura-te ca toate variabilele originale sunt in model.
         # Daca o variabila a fost eliminata prin literal pur sau nu a facut niciodata parte dintr-o divizare,
         for var in original_variables:
             if var not in final_model:
