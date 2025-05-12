@@ -150,10 +150,11 @@ def dpll_solver_recursive(clauses, assignment):
         # Toate variabilele din clauzele ramase sunt asignate.
         # Deoarece `clauses` nu este vid si nu exista clauze vide,
         # inseamna ca asignarea curenta nu satisface clauzele ramase.
-        # Deci, aceasta cale este NESATISFIABILa.
+        # Deci, aceasta cale este NESATISFIABILA.
         return (True, None)
 
     # Euristica simpla: alege variabila neasignata cu cel mai mic numar
+    # Posibila implementarea de ereustice avansate pentru a compara diferenta intre optimizari
     split_var = min(unassigned_vars_for_split)
 
     # Ramura 1: split_var = True
@@ -205,7 +206,7 @@ def dpll_solver(clauses_input):
     try:
         clauses = [frozenset(clause) for clause in clauses_input]
     except TypeError:
-        # Gestionarea erorii in cazul in care inputul nu este iterabil sau contine elemente ne-hashable
+        # Gestionarea erorii in cazul in care inputul nu este iterabil
         # Acest lucru nu ar trebui sa se intample cu outputul de la `genereaza_formula_satisfiabila`
         print("Eroare: Inputul pentru clauze nu este in formatul asteptat (lista de seturi/iterabile).")
         return (True, None)  # Consideram nesatisfiabil in caz de format incorect
@@ -230,7 +231,7 @@ def dpll_solver(clauses_input):
         # Daca o variabila a fost eliminata prin literal pur sau nu a facut niciodata parte dintr-o divizare,
         for var in original_variables:
             if var not in final_model:
-                final_model[var] = True  # Asignare implicita pentru variabilele neconstranse
+                final_model[var] = True  # Asignare implicita pentru variabilele libere
         return (False, final_model)
     else:  # Nesatisfiabil
         return (True, None)
